@@ -125,7 +125,7 @@ This process takes 2-10 minutes on first run. Subsequent runs are much faster.
 - **FastAPI**: Modern, fast web framework for building APIs
 - **Uvicorn**: ASGI server for running FastAPI
 - **Coqui TTS**: Open-source Text-to-Speech library
-- **XTTS v2**: State-of-the-art multilingual TTS model
+- **VITS/Tacotron2/Glow-TTS**: High-quality TTS models
 
 ### Frontend Stack
 
@@ -198,14 +198,9 @@ if __name__ == "__main__":
 
 If you have an NVIDIA GPU with CUDA installed, you can enable GPU acceleration for faster generation:
 
-In `app.py`, change:
+In `app.py`, find the model loading section and change `gpu=False` to `gpu=True`:
 ```python
-tts = TTS(model_name="tts_models/multilingual/multi-dataset/xtts_v2", progress_bar=True, gpu=False)
-```
-
-to:
-```python
-tts = TTS(model_name="tts_models/multilingual/multi-dataset/xtts_v2", progress_bar=True, gpu=True)
+tts = TTS(model_name="tts_models/en/ljspeech/vits", progress_bar=True, gpu=True)
 ```
 
 Also install CUDA-enabled PyTorch:

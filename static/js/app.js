@@ -77,13 +77,6 @@ generateBtn.addEventListener('click', async () => {
         // Scroll to the audio player
         outputSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         
-        // Auto-play the audio
-        setTimeout(() => {
-            audioPlayer.play().catch(err => {
-                console.log('Auto-play prevented by browser:', err);
-            });
-        }, 300);
-        
     } catch (error) {
         console.error('Error:', error);
         showError(`Error: ${error.message}`);

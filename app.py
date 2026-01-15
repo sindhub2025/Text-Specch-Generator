@@ -92,7 +92,7 @@ async def text_to_speech(request: TTSRequest):
         audio_filename = f"{audio_id}.wav"
         audio_path = os.path.join("static", "audio", audio_filename)
         
-        logger.info(f"Generating speech for: '{request.text[:50]}...'")
+        logger.info(f"Generating speech for text of length: {len(request.text)} characters")
         
         # Generate speech
         tts.tts_to_file(
@@ -127,12 +127,28 @@ async def health_check():
 async def delete_audio(filename: str):
     """Delete generated audio file"""
     try:
+        # Validate filename to prevent directory traversal
+        # Only allow alphanumeric, hyphens, and .wav extension
+        import re
+        if not re.match(r'^[a-zA-Z0-9\-]+\.wav$', filename):
+            raise HTTPException(status_code=400, detail="Invalid filename")
+        
         audio_path = os.path.join("static", "audio", filename)
+        
+        # Ensure the path is within the audio directory
+        audio_dir = os.path.abspath(os.path.join("static", "audio"))
+        abs_audio_path = os.path.abspath(audio_path)
+        if not abs_audio_path.startswith(audio_dir):
+            raise HTTPException(status_code=400, detail="Invalid file path")
+        
         if os.path.exists(audio_path):
             os.remove(audio_path)
+            logger.info(f"Deleted audio file: {filename}")
             return {"success": True, "message": "Audio deleted"}
         else:
             raise HTTPException(status_code=404, detail="Audio file not found")
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Error deleting audio: {e}")
         raise HTTPException(status_code=500, detail=str(e))
