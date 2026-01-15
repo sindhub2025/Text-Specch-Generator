@@ -45,6 +45,8 @@ The script will automatically:
    pip install --upgrade pip
    pip install -r requirements.txt
    ```
+   
+   **Note**: Installs secure versions (FastAPI 0.115.5, PyTorch 2.6.0) with no known vulnerabilities.
 
 4. **Start the Server**
    ```bash

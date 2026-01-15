@@ -68,7 +68,7 @@ pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-**Note**: The first installation will download the XTTS v2 model (approximately 1.8GB). This happens automatically when you first run the application.
+**Note**: This installs the latest secure versions of all dependencies (FastAPI 0.115.5, PyTorch 2.6.0, etc.) with no known vulnerabilities.
 
 ### Installation Time
 
@@ -238,6 +238,21 @@ Or edit the port in `app.py`
 - Check browser console for errors
 - Ensure browser supports HTML5 audio
 - Try a different browser (Chrome/Firefox recommended)
+
+## 🔒 Security
+
+This application uses patched versions of all dependencies with no known vulnerabilities:
+
+- **FastAPI 0.115.5** - Fixes ReDoS vulnerability (CVE-2024-24762)
+- **python-multipart 0.0.18** - Fixes DoS vulnerabilities
+- **PyTorch 2.6.0** - Fixes heap buffer overflow and use-after-free vulnerabilities
+
+**Security Best Practices:**
+- All text input is validated (length, type)
+- Path traversal protection on file operations
+- No sensitive data logged
+- Local-only binding by default (127.0.0.1)
+- Regular dependency updates recommended
 
 ## 📝 License
 
