@@ -27,6 +27,7 @@ wheels/
 *.pth
 tts_models/
 .cache/
+speaker_samples/
 
 # Generated audio files
 static/audio/*.wav
