@@ -1,12 +1,13 @@
 # 🎙️ Offline Text-to-Speech Generator
 
-A fully local, offline Text-to-Speech web application that runs on `http://localhost:8000` and produces natural human-sounding voice using **Coqui XTTS v2**, an open-source state-of-the-art TTS model.
+A fully local, offline Text-to-Speech web application that runs on `http://localhost:8000` and produces natural human-sounding voice using **Coqui TTS**, an open-source state-of-the-art TTS library.
 
 ## ✨ Features
 
 - ✅ **Fully Offline**: No internet required after initial setup
-- ✅ **Natural Voice**: Uses Coqui XTTS v2 for realistic human-sounding speech
-- ✅ **Multilingual**: Supports 15+ languages (English, Spanish, French, German, Italian, Portuguese, Polish, Turkish, Russian, Dutch, Czech, Arabic, Chinese, Japanese, Korean, Hindi)
+- ✅ **Natural Voice**: Uses Coqui TTS VITS model for realistic human-sounding speech
+- ✅ **High Quality**: VITS (primary), with Tacotron2 and Glow-TTS fallbacks
+- ✅ **English Optimized**: Trained on LJSpeech dataset for excellent English pronunciation
 - ✅ **No Paid APIs**: Completely free and open-source
 - ✅ **Privacy-Focused**: All processing happens locally on your machine
 - ✅ **Modern UI**: Clean, responsive web interface
@@ -42,8 +43,8 @@ Text-Specch-Generator/
 ### Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/sindhub2025/Text-Specch-Generator.git
-cd Text-Specch-Generator
+git clone https://github.com/sindhub2025/Text-Speech-Generator.git
+cd Text-Speech-Generator
 ```
 
 ### Step 2: Create a Virtual Environment (Recommended)
@@ -100,19 +101,18 @@ http://localhost:8000
 ### First Run
 
 On the first run, the application will:
-1. Download the XTTS v2 model (~1.8GB) automatically
+1. Download the VITS TTS model (~150MB) automatically
 2. Cache it in your home directory (`~/.local/share/tts/`)
 3. Load the model into memory
 
-This process takes 5-15 minutes on first run. Subsequent runs are much faster.
+This process takes 2-10 minutes on first run. Subsequent runs are much faster.
 
 ## 📖 How to Use
 
-1. **Enter Text**: Type or paste the text you want to convert to speech (max 1000 characters)
-2. **Select Language**: Choose your desired language from the dropdown
-3. **Generate Speech**: Click the "Generate Speech" button
-4. **Listen**: The audio player will appear with your generated speech
-5. **Download**: Click the download button to save the audio file
+1. **Enter Text**: Type or paste English text you want to convert to speech (max 1000 characters)
+2. **Generate Speech**: Click the "Generate Speech" button
+3. **Listen**: The audio player will appear with your generated speech
+4. **Download**: Click the download button to save the audio file
 
 ### Keyboard Shortcuts
 
@@ -135,12 +135,13 @@ This process takes 5-15 minutes on first run. Subsequent runs are much faster.
 
 ### Model Information
 
-**Coqui XTTS v2** (Cross-lingual Text-to-Speech)
-- Multi-speaker, multilingual TTS model
-- High-quality, natural-sounding voice
-- Supports 16+ languages
-- Based on transformer architecture
-- Zero-shot voice cloning capabilities
+**Coqui TTS with VITS Model**
+- Primary: `tts_models/en/ljspeech/vits` - Fast, high-quality single-speaker English TTS
+- Fallback 1: `tts_models/en/ljspeech/tacotron2-DDC` - Tacotron2 with DDC vocoder
+- Fallback 2: `tts_models/en/ljspeech/glow-tts` - Glow-TTS model
+- All models trained on LJSpeech dataset (female voice)
+- Natural prosody and intonation
+- Fast inference time (~2-5 seconds per sentence)
 
 ## 🔍 API Endpoints
 
@@ -218,8 +219,8 @@ pip install torch torchvision torchaudio --index-url https://download.pytorch.or
 
 If the model fails to download automatically:
 1. Check your internet connection
-2. Manually download from: https://huggingface.co/coqui/XTTS-v2
-3. Place in `~/.local/share/tts/tts_models--multilingual--multi-dataset--xtts_v2/`
+2. Check available disk space (need ~500MB free)
+3. Try manually clearing the cache: `rm -rf ~/.local/share/tts/`
 
 ### Memory Issues
 

@@ -1,7 +1,6 @@
 // DOM Elements
 const textInput = document.getElementById('textInput');
 const charCount = document.getElementById('charCount');
-const languageSelect = document.getElementById('languageSelect');
 const generateBtn = document.getElementById('generateBtn');
 const btnText = document.querySelector('.btn-text');
 const spinner = document.querySelector('.spinner');
@@ -32,7 +31,6 @@ textInput.addEventListener('input', () => {
 // Generate speech
 generateBtn.addEventListener('click', async () => {
     const text = textInput.value.trim();
-    const language = languageSelect.value;
     
     // Validation
     if (!text) {
@@ -60,7 +58,7 @@ generateBtn.addEventListener('click', async () => {
             },
             body: JSON.stringify({
                 text: text,
-                language: language
+                language: "en"
             })
         });
         
@@ -159,18 +157,3 @@ async function checkHealth() {
 // Run health check on page load
 checkHealth();
 
-// Add sample texts for quick testing
-const sampleTexts = [
-    "Hello! This is a demonstration of offline text to speech technology.",
-    "The quick brown fox jumps over the lazy dog. This sentence contains every letter of the alphabet.",
-    "Technology has transformed the way we communicate, learn, and work in the modern world."
-];
-
-// Optional: Add a sample text button (you can uncomment if desired)
-// const addSampleBtn = document.createElement('button');
-// addSampleBtn.textContent = '📝 Use Sample Text';
-// addSampleBtn.className = 'sample-btn';
-// addSampleBtn.onclick = () => {
-//     textInput.value = sampleTexts[Math.floor(Math.random() * sampleTexts.length)];
-//     textInput.dispatchEvent(new Event('input'));
-// };

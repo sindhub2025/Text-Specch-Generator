@@ -7,7 +7,6 @@ from TTS.api import TTS
 import os
 import uuid
 import logging
-import urllib.request
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -26,26 +25,6 @@ os.makedirs("static/audio", exist_ok=True)
 # Global variables for TTS
 tts = None
 tts_model_type = None
-speaker_wav_path = None
-
-def download_speaker_sample():
-    """Download a sample speaker WAV file for XTTS v2"""
-    speaker_dir = "speaker_samples"
-    os.makedirs(speaker_dir, exist_ok=True)
-    speaker_path = os.path.join(speaker_dir, "female_speaker.wav")
-    
-    if not os.path.exists(speaker_path):
-        try:
-            # Download a sample speaker file from Coqui's examples
-            logger.info("Downloading speaker sample for voice cloning...")
-            url = "https://github.com/coqui-ai/TTS/raw/dev/tests/data/ljspeech/wavs/LJ001-0001.wav"
-            urllib.request.urlretrieve(url, speaker_path)
-            logger.info(f"Speaker sample downloaded to {speaker_path}")
-            return speaker_path
-        except Exception as e:
-            logger.error(f"Could not download speaker sample: {e}")
-            return None
-    return speaker_path
 
 # Initialize TTS model
 logger.info("Loading TTS model... This may take a few minutes on first run.")
